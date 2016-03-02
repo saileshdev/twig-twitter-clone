@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twig</title>
+  <link rel="stylesheet/less" href="/style.less" />
+  <script src="/less.js"></script>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<header>
+    <div class="wrapper">
+        <span>Twitter Clone</span>
+        <% if current_user %>
+            <%= link_to "Buddies' Ribbits", buddies_path %>
+            <%= link_to "Public Ribbits", ribbits_path %>
+            <%= link_to "Public Profiles", users_path %>
+            <%= link_to "My Profile", current_user %>
+            <%= link_to "Log Out", logout_path %>
+        <% else %>
+        <%= form_tag sessions_path do %>
+            <%= text_field_tag :username, nil, placeholder: "username" %>
+            <%= password_field_tag :password, nil, placeholder: "password" %>
+            <%= submit_tag "Log In" %>
+        <% end %>
+        <% end %>
+    </div>
+</header>
+<div id="content">
+    <div class="wrapper">
+        <% flash.each do |name, msg| %>
+            <%= content_tag :div, msg, class: "flash #{name}" %>
+        <% end %>
+        <%= yield %>
+    </div>
+</div>
+<footer>
+    <div class="wrapper">
+        Twig - A Twitter Clone
+    </div>
+</footer>
+</body>
+</html>
